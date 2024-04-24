@@ -8,6 +8,7 @@
 
 在Analysis Api栏填上解析服务器
 例如： example.com/blidownload/?url=
+
 搭建解析服务器可参考 https://github.com/mmyo456/blidownload
 
 在Prefix栏填上哔哩哔哩的链接，不填默认是 https://www.bilibili.com/video/

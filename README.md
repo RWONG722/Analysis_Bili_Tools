@@ -7,7 +7,7 @@
 ![image](https://github.com/RWONG722/Analysis_Bili_Tools/assets/99193291/0e828ec6-e21a-443f-9671-c1f958407637)
 
 在Analysis Api栏填上解析服务器
-例如： example.com/blidownload/?url=
+例如: https://example.com/blidownload/?url=
 
 搭建解析服务器可参考 https://github.com/mmyo456/blidownload
 

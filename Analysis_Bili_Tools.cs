@@ -3,7 +3,7 @@ Script Name: Analysis_Bili_Tools
 Version: 1.2
 Description: B站解析工具
 modified: 2024/04/25
-Author: Raymond_OuO
+Author: Raymond_OuO(github.com/RWONG722)
 https://github.com/RWONG722/Analysis_Bili_Tools
 **/
 

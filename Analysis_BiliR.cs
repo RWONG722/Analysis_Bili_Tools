@@ -1,6 +1,6 @@
 ﻿/**
 Script Name: Analysis_BiliR
-Version: 2.0.0
+Version: 2.0.2
 Description: B站视频解析工具
 Author: Raymond_OuO(github.com/RWONG722)
 https://github.com/RWONG722/Analysis_Bili_Tools
@@ -37,18 +37,21 @@ public class Analysis_BiliR : UdonSharpBehaviour
 
     void Start()
     {   
+	//default Api Server
+		string defaultAPI = "https://api.rwit.net/?url=";
         part.text = "";
+		
         if (server1.Length > 0)
-        {
+        {	
             SJX_Url.text = server1;
         }
         else if (server2.Length > 0)
-        {
+        {   
             SJX_Url.text = server2;
         }
         else
         {
-            SJX_Url.text = "https://api.rwit.net/?url=";
+            SJX_Url.text = defaultAPI;
         }
 
         if (prefix.Length > 0)
@@ -59,13 +62,26 @@ public class Analysis_BiliR : UdonSharpBehaviour
         {
             Sprefix.text = "bilibili.com/";
         }
-		
-		
+
+        if (server1.Length == 0)
+        {
+            server1 = defaultAPI;
+        }
+        if (server2.Length == 0)
+        {
+            server2 = defaultAPI;
+        }
+        
 
     }
     public void OnInput()//输入框内容变化时
     {
-
+		if (SJX_Url.text.Length > 0)
+		{
+			Input.text = "没有填入解析服务器！";
+            return;
+		}
+		
         if (Input.text.Contains("BV") || Input.text.Length > 11)
         {
             string text = Input.text;

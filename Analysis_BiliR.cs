@@ -1,6 +1,6 @@
 ﻿/**
 Script Name: Analysis_BiliR
-Version: 2.0.3 Update on 2025/01/01
+Version: 2.0.4 Update on 2025/01/03
 Description: B站视频解析工具
 Author: Raymond_OuO(github.com/RWONG722)
 https://github.com/RWONG722/Analysis_Bili_Tools
@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.SDK3.Persistence;
 
 public class Analysis_BiliR : UdonSharpBehaviour
 {
@@ -35,16 +36,58 @@ public class Analysis_BiliR : UdonSharpBehaviour
     public InputField VideoUrlInput;
     public InputField VideoPartInput;
 
-    private const string defaultAPI = "https://api.rwit.net/?url=";
+    private const string defaultAPI = "https://api.rwit.net/jx/?url=";
 
     void Start()
     {
-        InitializeFields();
+
+    }
+
+    void OnPlayerRestored(VRCPlayerApi player)
+    {
+        APIUrlInput.text = PlayerData.GetString(Networking.LocalPlayer, "AnalysisServer");
+        PrefixInput.text = PlayerData.GetString(Networking.LocalPlayer, "AnalysisPrefix");
+        SuffixInput.text = PlayerData.GetString(Networking.LocalPlayer, "AnalysisSuffix");
+        if (APIUrlInput.text.Length == 0)
+        {
+            Debug.Log("First Setup");
+            InitializeFields();
+        }
     }
 
     private void InitializeFields()
     {
-        APIUrlInput.text = !string.IsNullOrEmpty(server1) ? server1 : !string.IsNullOrEmpty(server2) ? server2 : defaultAPI;
+        if (APIUrlInput.text.Length == 0)
+        {
+            if (server1.Length > 0)
+            {
+                APIUrlInput.text = server1;
+                PrefixInput.text = prefix1;
+                SuffixInput.text = suffix1;
+            }
+            else if (server2.Length > 0)
+            {
+                APIUrlInput.text = server2;
+                PrefixInput.text = prefix2;
+                SuffixInput.text = suffix2;
+            }
+            else
+            {
+                APIUrlInput.text = defaultAPI;
+                PrefixInput.text = "";
+                SuffixInput.text = "";
+
+            }
+            OnChangeSettings();
+        }
+    }
+
+    public void OnChangeSettings() // 保存设置
+    {
+        Debug.Log("Settings Saved");
+        PlayerData.SetString("AnalysisServer", APIUrlInput.text);
+        PlayerData.SetString("AnalysisPrefix", PrefixInput.text);
+        PlayerData.SetString("AnalysisSuffix", SuffixInput.text);
     }
 
     public void OnInput() // 输入框内容变化时
@@ -64,7 +107,7 @@ public class Analysis_BiliR : UdonSharpBehaviour
             // part is number and need > 1
             if (int.TryParse(VideoPartInput.text, out int partNumber) && partNumber > 1)
             {
-                VideoUrlInput.text += $"&part={partNumber}";
+                VideoUrlInput.text += $"&p={partNumber}";
             }
         }
         else
@@ -105,6 +148,7 @@ public class Analysis_BiliR : UdonSharpBehaviour
         SuffixInput.text = suffix;
         PrefixInput.text = prefix;
         APIUrlInput.text = server;
+        OnChangeSettings();
     }
 
     public void OnSelect_Clear()
@@ -112,5 +156,6 @@ public class Analysis_BiliR : UdonSharpBehaviour
         SuffixInput.text = "";
         PrefixInput.text = "";
         APIUrlInput.text = "";
+        OnChangeSettings();
     }
 }

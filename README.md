@@ -17,7 +17,9 @@
 
 ![image](https://github.com/user-attachments/assets/ceaf8e7c-c95e-4062-a037-ba4387f2814b)
 
-搭建解析服务器可参考 https://github.com/mmyo456/blidownload
+搭建解析服务器可参考 
+PHP:https://github.com/mmyo456/blidownload
+Python:https://github.com/RWONG722/BVAnalysis
 
 在Server 1 /Server 2 栏填上 解析服务器
 

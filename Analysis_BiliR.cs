@@ -12,6 +12,8 @@ using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.SDK3.Persistence;
+using System;
+using System.Text.RegularExpressions;
 
 public class Analysis_BiliR : UdonSharpBehaviour
 {
@@ -118,8 +120,27 @@ public class Analysis_BiliR : UdonSharpBehaviour
 
     private string ExtractBVNumber(string input)
     {
-        int startIndex = input.IndexOf("BV");
-        return startIndex >= 0 ? input.Substring(startIndex, 12) : string.Empty;
+        string bvPattern = @"BV[a-zA-Z0-9]{10}";
+        Match bvMatch = Regex.Match(input, bvPattern);
+        
+        string partPattern = @"[?&]p=(\d+)";
+        Match partMatch = Regex.Match(input, partPattern);
+
+        if (bvMatch.Success)
+        {
+            if (partMatch.Success && partMatch.Groups.Count > 1)
+            {
+                VideoPartInput.text = partMatch.Groups[1].Value;
+            }
+            else
+            {
+                VideoPartInput.text = "1";
+            }
+            
+            return bvMatch.Value;
+        }
+        
+        return null;
     }
 
     public void OnClear() // 清空输入框

@@ -1,6 +1,6 @@
 ﻿/**
 Script Name: Analysis_BiliR
-Version: 2.0.4 Update on 2025/01/03
+Version: 2.1.0 Update on 2025/01/06
 Description: B站视频解析工具
 Author: Raymond_OuO(github.com/RWONG722)
 https://github.com/RWONG722/Analysis_Bili_Tools

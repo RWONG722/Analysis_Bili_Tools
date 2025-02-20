@@ -111,6 +111,8 @@ public class Analysis_BiliR : UdonSharpBehaviour
             {
                 VideoUrlInput.text += $"&p={partNumber}";
             }
+        }else if(VideoUrlInput.text.Contains("live.bilibili.com")){
+            VideoUrlInput = jxurl + VideoUrlInput.text;
         }
         else
         {
